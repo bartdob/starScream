@@ -13,6 +13,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
+    "jquery": "^3.4.1",
     "lodash.debounce": "^4.0.8",
     "vue": "^2.6.11",
     "vue-plugin-axios": "^1.0.14",

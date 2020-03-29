@@ -1,10 +1,11 @@
 <template>
   <div class="wrapper">
-    <div class=search>
+    <div class="search">
       <label for="search">Search</label>
-      <input type="text"
+      <input type="date" class="text-center"
+      data-date-format="YYYY-MM-DD"
       name="search"
-      id="search "
+      id="search"
       placeholder="YYYY-MM-DD"
       required pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]
       |1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
@@ -12,9 +13,13 @@
       v-model="searchValue"
       @input="handleInput"
       />
-      <div style="max-height: 300px;">
-        zdjecie
-        <img :src="result" :key="1223"/>
+      <div>
+        <div>
+          <!-- <p v-bind="desc[2]">opis</p> -->
+          <a :href="result">
+          <img :src="result" class="img-thumbnail" :key="1223"/>
+          </a>
+        </div>
       </div>
 
     </div>
@@ -34,19 +39,23 @@ export default
     return {
       searchValue: '',
       result: '',
+      desc: [],
     };
   },
   methods: {
     handleInput: debounce(function handle() {
-      axios.get('https://api.nasa.gov/planetary/apod?api_key=JcJ60HqxjGiYm3YUc9471sFH2FxVgdpcTIJo5hIq&hd=true', {
+      axios.get('https://api.nasa.gov/planetary/apod?', {
         params: {
           date: this.searchValue,
+          api_key: 'JcJ60HqxjGiYm3YUc9471sFH2FxVgdpcTIJo5hIq',
+          hd: true,
         },
 
       })
         .then((response) => {
           console.log(response);
           this.result = response.data.hdurl;
+          // this.desc = response.data;
           console.log('rezultat');
         })
         .catch((error) => {
@@ -66,17 +75,21 @@ export default
   width: 100%;
   align-items: center;
   flex-direction: column;
+  // background-image: url("../assets/97.jpeg");
+  color:white;
 }
 .search{
   width: 300px;
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-top: 300px;
 }
 
 input{
-  border: 0;
+border: 0;
 border-bottom: 1px solid grey;
 height: 30px;
+margin-top: 20px;
 }
 </style>
