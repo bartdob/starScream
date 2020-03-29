@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <div>
+      <p>Choose a day and see a beatiful pic thanks NASA api</p>
+      </div>
     <div class="search">
       <label for="search">Search</label>
       <input type="date" class="text-center"
@@ -14,7 +17,7 @@
       @input="handleInput"
       />
       <div>
-        <div>
+        <div class="img">
           <!-- <p v-bind="desc[2]">opis</p> -->
           <a :href="result">
           <img :src="result" class="img-thumbnail" :key="1223"/>
@@ -83,7 +86,7 @@ export default
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 300px;
+  margin-top: 100px;
 }
 
 input{
@@ -91,5 +94,13 @@ border: 0;
 border-bottom: 1px solid grey;
 height: 30px;
 margin-top: 20px;
+background: none;
+color: white;
+}
+p{
+  margin-top: 200px;
+}
+.img{
+  background: none;
 }
 </style>

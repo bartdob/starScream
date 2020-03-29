@@ -15,7 +15,11 @@
 }
 .app{
   background-image: url("assets/97.jpeg");
-  height: 1000px;
+  height: 100vh;
+  width: 100%;
   background-size: 'cover';
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
 }
 </style>
