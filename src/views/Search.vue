@@ -1,52 +1,49 @@
 <template>
   <div class="wrapper">
-    <div>
-      <p>Choose a day and see a beatiful pic thanks NASA api</p>
-      </div>
-    <div class="search">
-      <label for="search">Search</label>
-      <input type="date" class="text-center"
-      data-date-format="YYYY-MM-DD"
-      name="search"
-      id="search"
-      placeholder="YYYY-MM-DD"
-      required pattern="(?:19|20)\[0-9\]{2}-(?:(?:0\[1-9\]|1\[0-2\])/(?:0\[1-9\]
-      |1\[0-9\]|2\[0-9\])|(?:(?!02)(?:0\[1-9\]|1\[0-2\])/(?:30))|(?:(?:0\[13578\]|1\[02\])-31))"
-      title="Enter a date in this format YYYY/MM/DD"
-      v-model="searchValue"
-      @input="handleInput"
-      />
-      <div>
+    <transition name="fade">
+      <starImage v-if="step === 0"/>
+    </transition>
+    <Claim v-if="step === 0" />
+    <searchInput v-model="searchValue" @input="handleInput" :dark="step === 1" />
         <div class="img">
-          <!-- <p v-bind="desc[2]">opis</p> -->
+          <div class="container">
+             <p v-html="desc"/>
+          </div>
+
           <a :href="result">
           <img :src="result" class="img-thumbnail" :key="1223"/>
           </a>
         </div>
-      </div>
-
-    </div>
   </div>
 </template>
 
 <script>
-// const Api = 'https://api.nasa.gov/planetary/apod?api_key=JcJ60HqxjGiYm3YUc9471sFH2FxVgdpcTIJo5hIq';
+import Claim from '../components/Claim.vue';
+import searchInput from '../components/searchInput.vue';
+import starImage from '../components/starImage.vue';
+
+
 const axios = require('axios');
 const debounce = require('lodash.debounce');
-// const fetchData = (date) => axios.get(`/fetch/${date}`);
+
 
 export default
 {
   name: 'Search',
+  components: { starImage, Claim, searchInput },
   data() {
     return {
+      loading: false,
+      step: 0,
       searchValue: '',
       result: '',
-      desc: [],
+      desc: '',
     };
   },
   methods: {
     handleInput: debounce(function handle() {
+      this.loading = true;
+      console.log(this.searchValue);
       axios.get('https://api.nasa.gov/planetary/apod?', {
         params: {
           date: this.searchValue,
@@ -58,8 +55,11 @@ export default
         .then((response) => {
           console.log(response);
           this.result = response.data.hdurl;
-          // this.desc = response.data;
-          console.log('rezultat');
+          this.desc = response.data.explanation;
+          console.log(this.desc);
+          this.loading = false;
+          this.step = 1;
+          // this.result = this.searchValue;
         })
         .catch((error) => {
           console.log(error);
@@ -74,33 +74,19 @@ export default
 .wrapper{
   display: flex;
   margin: 0;
-  padding: 30px;
+  padding: 0px;
   width: 100%;
   align-items: center;
   flex-direction: column;
-  // background-image: url("../assets/97.jpeg");
-  color:white;
 }
-.search{
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-top: 100px;
-}
-
-input{
-border: 0;
-border-bottom: 1px solid grey;
-height: 30px;
-margin-top: 20px;
-background: none;
-color: white;
-}
-p{
-  margin-top: 200px;
-}
-.img{
+a, img{
   background: none;
+  border: none;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
