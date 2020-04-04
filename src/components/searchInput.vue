@@ -13,17 +13,27 @@
       title="Enter a date in this format YYYY/MM/DD"
       :value="value"
       @input="handleChange"
-
       />
-
+      <div v-if="value === day || value >= day">
+        <p class="wrongDate">Wrong date, the picture was not being taken yet!</p>
+        <p class="wrongDate">Please choose today or the past date</p>
+        </div>
     </div>
 </div>
 
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: 'searchInput',
+  data() {
+    return {
+      warning: false,
+      day: moment().add(1, 'days').format('YYYY-MM-DD'),
+    };
+  },
   props: {
     value: {
       value: String,
@@ -83,5 +93,9 @@ p{
 }
 .img{
   background: none;
+}
+.wrongDate
+{
+  margin: 20px;
 }
 </style>

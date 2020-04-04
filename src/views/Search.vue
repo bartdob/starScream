@@ -5,14 +5,13 @@
     </transition>
     <Claim v-if="step === 0" />
     <searchInput v-model="searchValue" @input="handleInput" :dark="step === 1" />
-        <div class="img">
-          <div class="container">
-             <p v-html="desc"/>
+        <div class="container">
+          <div class="img">
+            <p v-html="desc"/>
+              <a :href="result">
+                <img :src="result" class="img-thumbnail" :key="1223"/>
+              </a>
           </div>
-
-          <a :href="result">
-          <img :src="result" class="img-thumbnail" :key="1223"/>
-          </a>
         </div>
   </div>
 </template>

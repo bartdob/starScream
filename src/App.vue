@@ -3,6 +3,7 @@
     <div class="navbar navbar-dark bg-dark">
               <router-link class="routerlink" to="/">STAR SCREAM</router-link>
               <router-link class="routerlink" to="/about">about</router-link>
+              <span class="date">{{ new Date() | moment("dddd, MMMM Do YYYY") }}</span>
     </div>
       <router-view/>
   </div>
@@ -20,6 +21,9 @@
   color: white;
 }
 
+.date{
+  color: white;
+}
 
 .app{
   // background-image: url("assets/97.jpeg");
