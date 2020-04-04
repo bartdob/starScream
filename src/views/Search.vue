@@ -46,7 +46,7 @@ export default
       axios.get('https://api.nasa.gov/planetary/apod?', {
         params: {
           date: this.searchValue,
-          api_key: 'JcJ60HqxjGiYm3YUc9471sFH2FxVgdpcTIJo5hIq',
+          api_key: '',
           hd: true,
         },
 
