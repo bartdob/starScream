@@ -46,7 +46,7 @@ export default
       axios.get('https://api.nasa.gov/planetary/apod?', {
         params: {
           date: this.searchValue,
-          api_key: '',
+          api_key: '',  // key is in priv repo
           hd: true,
         },
 
